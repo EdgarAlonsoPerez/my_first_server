@@ -6,10 +6,16 @@ let locations = [{ city: "Ciudad Juarez", state: "Chihuahua", country: "Mexico",
 let customers = [{ name: "Total Play", id: "1" }, { name: "Televisa", id: "2" }, { name: "UTEP", id: "3" }];
 
 const urlHandler = {
-    "/locations": (p) => {
+    "locations": (id) => {
+        if (id) {
+            return locations.find(e => e.id == id)
+        }
         return locations
     },
-    "/customers": (p) => {
+    "customers": (id) => {
+        if (id) {
+            return customers.find(e => e.id == id)
+        }
         return customers
     },
     "null": () => {
@@ -18,9 +24,10 @@ const urlHandler = {
 }
 
 const server = http.createServer((req, res) => {
+    const splittedUrl = req.url.split("/")
     let result = urlHandler['null']()
-    if (req.url != '' && urlHandler.hasOwnProperty(req.url)) {
-        result = urlHandler[req.url](req)
+    if (req.url != '' && urlHandler.hasOwnProperty(splittedUrl[1])) {
+        result = urlHandler[splittedUrl[1]](splittedUrl[2]) || {}
     }
 
     res.writeHead(200, {
