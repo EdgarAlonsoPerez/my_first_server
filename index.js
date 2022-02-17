@@ -107,3 +107,17 @@ function finishRequest({ res, result }) {
     })
     res.end(JSON.stringify(result));
 }
+
+/**
+ * Add a Customer example
+fetch("http://localhost:3000/customers",
+    {
+        method:"POST",
+        body:JSON.stringify({
+            name:"Telefonia"
+        })
+    })
+    .then( response => response.json() )
+    .then( customer => console.log(customer) )
+ * 
+*/
